@@ -1,5 +1,8 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
+#define in the app user for authorization
+User = get_user_model()
 # Create your models here.
 class Post(models.Model):
     '''
@@ -18,8 +21,8 @@ class Post(models.Model):
     def __str__(self):
         return self.title
     
-class Category:
-    name = models.CharField(max_length=50,on_delete=models.CASCADE)
+class Category(models.Model):
+    name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
