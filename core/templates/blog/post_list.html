@@ -5,7 +5,8 @@
 <div>
     {% for post in object_list %}
         <h3><a href={% url "blog:post-detail" pk=post.id %}>{{ post.title }}</a></h3>
-        <h5>{{ post.author }}</h5>
+        <h5>{{ post.author.first_name }} {{post.author.last_name}}</h5>
+        <h5><a href={% url 'blog:post-update' pk=post.id %}>edit post</a></h5>
     {% endfor %}
 </div>
 <div class="pagination">

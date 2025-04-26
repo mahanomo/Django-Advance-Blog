@@ -1,7 +1,11 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import TemplateView,ListView,CreateView
+from django.urls import reverse
+from django.views.generic import TemplateView,ListView,CreateView,UpdateView,DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
 from .models import Post
+from .forms import PostForm
 # Create your views here.
 
 class IndexView(TemplateView):
@@ -14,7 +18,7 @@ class IndexView(TemplateView):
         context['title'] = "Home"
         return context
     
-class PostsListView(ListView):
+class PostsListView(LoginRequiredMixin,ListView):
     model = Post
     template_name = "blog/list_view.html"
     paginate_by = 2
@@ -22,10 +26,24 @@ class PostsListView(ListView):
     def get_queryset(self):
         return Post.objects.filter(status=True).order_by("-id")
     
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin,DetailView):
     model = Post
 
-class AuthorCreateView(CreateView):
+class AuthorCreateView(LoginRequiredMixin,CreateView):
+    template_name = "blog/post_form.html"
+    form_class = PostForm
+    success_url = "/blog/posts/"
+
+    def form_valid(self, form):
+        # Attach the currently logged-in user as the author before saving
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+    
+class PostUpdateView(LoginRequiredMixin,UpdateView):
     model = Post
-    fields = ["author", "title", "content", "published_date"]
+    form_class = PostForm
+    success_url = "/blog/posts/"
+
+class PostDeleteView(LoginRequiredMixin,DeleteView):
+    model = Post
     success_url = "/blog/posts/"
