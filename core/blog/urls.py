@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,include
 from . import views
 from django.views.generic.base import RedirectView
 
@@ -14,4 +14,5 @@ urlpatterns = [
     path("posts/create/", views.AuthorCreateView.as_view(), name="post-create"),
     path("posts/<int:pk>/update", views.PostUpdateView.as_view(), name="post-update"),
     path("posts/<int:pk>/delete", views.PostDeleteView.as_view(), name="post-delete"),
+    path("api/v1/",include("blog.api.v1.urls")),
 ]

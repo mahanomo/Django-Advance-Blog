@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
 from .models import Post
 from .forms import PostForm
+
 # Create your views here.
 
 class IndexView(TemplateView):
@@ -47,3 +48,4 @@ class PostUpdateView(LoginRequiredMixin,UpdateView):
 class PostDeleteView(LoginRequiredMixin,DeleteView):
     model = Post
     success_url = "/blog/posts/"
+
