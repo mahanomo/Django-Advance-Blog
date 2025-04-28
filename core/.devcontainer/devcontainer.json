@@ -1,0 +1,17 @@
+{
+  "name": "Django Dev in Docker",
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
+  "service": "backend",
+  "workspaceFolder": "/app",
+  "appPort": [8000],
+  "settings": {
+    "python.pythonPath": "/usr/local/bin/python"
+  },
+  "extensions": [
+    "ms-python.python",
+    "ms-python.vscode-pylance"
+  ],
+  "postCreateCommand": "pip install -r requirements.txt || true"
+}
