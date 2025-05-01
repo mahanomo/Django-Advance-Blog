@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from blog.models import Post
+from blog.models import Post,Category
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,3 +10,9 @@ class PostSerializer(serializers.ModelSerializer):
         rep = super().to_representation(instance)
         rep['author'] = f"{instance.author.first_name} {instance.author.last_name}"
         return rep
+    
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ["id","name"]
