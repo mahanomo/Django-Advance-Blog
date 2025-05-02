@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 # from django.contrib.auth import get_user_model
 
 #define in the app user for authorization
@@ -20,6 +21,15 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_snippet(self):
+        return self.content[0:4]+"..."
+    
+    def get_absolute_api_url(self):
+        return reverse("blog:api-v1:p-modelviewset-detail", kwargs={"pk": self.pk})
+    
+    
+
     
 class Category(models.Model):
     name = models.CharField(max_length=50)
