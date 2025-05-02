@@ -12,7 +12,10 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.viewsets import GenericViewSet
 from django.http import Http404
 from rest_framework import viewsets
-
+from .permissions import IsOwnerOrReadOnly
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter,OrderingFilter
+from .pagination import CustomPagination
 
 '''
 @api_view(["GET","POST"])
@@ -162,7 +165,12 @@ class PostModelViewSet(viewsets.ModelViewSet):
     """
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
+    filter_backends = [DjangoFilterBackend,SearchFilter,OrderingFilter]
+    search_fields = ['title', 'content']
+    filterset_fields = {'category': ['exact','in'], 'author': ['exact','in'], 'status': ['exact','in']}
+    ordering_fields = ['published_date']
+    pagination_class = CustomPagination
 
 
 class CategoryModelViewSet(viewsets.ModelViewSet):
