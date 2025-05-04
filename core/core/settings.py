@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'accounts',
     'blog',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_filters',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -137,9 +139,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # config custom user model in the accounts app
 AUTH_USER_MODEL = "accounts.User"
 
-#   set drf permissions
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.IsAuthenticated',
-#     ]
-# }
+# set drf permissions
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
