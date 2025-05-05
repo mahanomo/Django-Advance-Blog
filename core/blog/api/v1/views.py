@@ -1,5 +1,5 @@
 from rest_framework.decorators import api_view,permission_classes
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly,IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import PostSerializer,CategorySerializer
@@ -165,7 +165,8 @@ class PostModelViewSet(viewsets.ModelViewSet):
     """
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
+    # permission_classes = [IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend,SearchFilter,OrderingFilter]
     search_fields = ['title', 'content']
     filterset_fields = {'category': ['exact','in'], 'author': ['exact','in'], 'status': ['exact','in']}

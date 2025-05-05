@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from accounts.models import User
+from accounts.models import User,Profile
 from django.core import exceptions
 import django.contrib.auth.password_validation as validators
 from django.contrib.auth import authenticate
@@ -67,3 +67,38 @@ class CustomAuthTokenSerializer(serializers.Serializer):
 
         attrs['user'] = user
         return attrs
+
+
+from rest_framework import serializers
+from django.contrib.auth.models import User
+
+class ChangePasswordSerializer(serializers.Serializer):
+    model = User
+
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+    new_password2 = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        if attrs.get('new_password') != attrs.get('new_password2'):
+            raise serializers.ValidationError({'detail':"passwords dosn't match!"})
+        
+        errors = {}
+        try:
+            # validate the complexity of password
+            validators.validate_password(attrs.get('new_password'))
+        except exceptions.ValidationError as e:
+            raise serializers.ValidationError({'new_password':list(e.messages)})
+            
+        return super().validate(attrs)
+    
+
+class ProfileSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(source='user.email', read_only=True)
+   
+    class Meta:
+        model = Profile
+        fields=['id','email','first_name','last_name','descreaption']
