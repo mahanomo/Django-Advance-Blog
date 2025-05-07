@@ -1,10 +1,11 @@
 from rest_framework import serializers
-from accounts.models import User,Profile
+from accounts.models import Profile
 from django.core import exceptions
 import django.contrib.auth.password_validation as validators
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
-
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class RegistrationSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(max_length=100,write_only=True)
@@ -71,11 +72,8 @@ class CustomAuthTokenSerializer(serializers.Serializer):
         return attrs
 
 
-from rest_framework import serializers
-from django.contrib.auth.models import User
-
 class ChangePasswordSerializer(serializers.Serializer):
-    model = User
+    # model = User
 
     """
     Serializer for password change endpoint.

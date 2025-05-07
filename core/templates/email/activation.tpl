@@ -5,7 +5,7 @@ Hello
 {% endblock %}
 
 {% block body %}
-<h4>Your Token is: {{token}}</h4>
+<h4>http://127.0.0.1:8000/accounts/api/v1/activation/confirm/{{token}}</h4>
 {% endblock %}
 
 {% block html %}
