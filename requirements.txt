@@ -8,3 +8,5 @@ djangorestframework
 markdown
 django-filter
 djangorestframework-simplejwt
+drf-yasg
+django-mail-templated

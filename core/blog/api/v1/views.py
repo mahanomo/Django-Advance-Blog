@@ -166,7 +166,7 @@ class PostModelViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     # permission_classes = [IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend,SearchFilter,OrderingFilter]
     search_fields = ['title', 'content']
     filterset_fields = {'category': ['exact','in'], 'author': ['exact','in'], 'status': ['exact','in']}

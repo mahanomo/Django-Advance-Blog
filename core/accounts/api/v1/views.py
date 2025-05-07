@@ -7,7 +7,9 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from accounts.models import User,Profile
 from django.shortcuts import get_object_or_404
-
+from mail_templated import EmailMessage
+from ..utils import EmailThread
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class RegistrationApiView(generics.GenericAPIView):
     serializer_class = RegistrationSerializer
@@ -82,3 +84,19 @@ class ProfileApiView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         obj = get_object_or_404(Profile, user=self.request.user)
         return obj
+
+class TestEmail(generics.GenericAPIView):
+    
+    def get(self, request, *args, **kwargs):
+        self.email = "hosseinrejvani8@gmail.com"
+        user_obj = get_object_or_404(User, email=self.email)
+        token = self.get_tokens_for_user(user_obj)
+        email_obj = EmailMessage('email/hello.tpl', {'token':token}, "admin@admin.com",
+                       to=[self.email])
+        EmailThread(email_obj).start()
+        return Response('email sent')
+
+
+    def get_tokens_for_user(self,user):
+        refresh = RefreshToken.for_user(user)
+        return str(refresh.access_token)
