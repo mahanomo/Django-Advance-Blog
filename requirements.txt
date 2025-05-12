@@ -11,3 +11,6 @@ djangorestframework-simplejwt
 drf-yasg
 django-mail-templated
 flake8
+black
+pytest
+pytest-django
