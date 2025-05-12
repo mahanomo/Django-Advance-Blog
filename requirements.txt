@@ -10,3 +10,4 @@ django-filter
 djangorestframework-simplejwt
 drf-yasg
 django-mail-templated
+flake8
