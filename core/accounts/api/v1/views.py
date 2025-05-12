@@ -36,7 +36,10 @@ class RegistrationApiView(generics.GenericAPIView):
             user_obj = get_object_or_404(User, email=email)
             token = self.get_tokens_for_user(user_obj)
             email_obj = EmailMessage(
-                "email/activation.tpl", {"token": token}, "admin@admin.com", to=[email]
+                "email/activation.tpl",
+                {"token": token},
+                "admin@admin.com",
+                to=[email],
             )
             EmailThread(email_obj).start()
 

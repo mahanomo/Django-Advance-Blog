@@ -1,6 +1,5 @@
 from django.urls import path
 from .. import views
-from rest_framework import routers
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -10,7 +9,11 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     # registration
-    path("registration/", views.RegistrationApiView.as_view(), name="registration"),
+    path(
+        "registration/",
+        views.RegistrationApiView.as_view(),
+        name="registration",
+    ),
     # verification and resend verification
     path(
         "activation/confirm/<str:token>",
@@ -28,7 +31,9 @@ urlpatterns = [
     path("token/logout/", views.CustomLogout.as_view(), name="logout-token"),
     # change password
     path(
-        "change_password/", views.ChangePasswordView.as_view(), name="change-password"
+        "change_password/",
+        views.ChangePasswordView.as_view(),
+        name="change-password",
     ),
     # jwt login
     path("jwt/create/", TokenObtainPairView.as_view(), name="jwt-create"),

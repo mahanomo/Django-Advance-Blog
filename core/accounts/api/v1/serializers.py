@@ -20,7 +20,6 @@ class RegistrationSerializer(serializers.ModelSerializer):
         if attrs.get("password") != attrs.get("confirm_password"):
             raise serializers.ValidationError({"detail": "passwords dosn't match!"})
 
-        errors = {}
         try:
             # validate the complexity of password
             validators.validate_password(attrs.get("password"))
@@ -85,8 +84,6 @@ class ChangePasswordSerializer(serializers.Serializer):
     def validate(self, attrs):
         if attrs.get("new_password") != attrs.get("new_password2"):
             raise serializers.ValidationError({"detail": "passwords dosn't match!"})
-
-        errors = {}
         try:
             # validate the complexity of password
             validators.validate_password(attrs.get("new_password"))

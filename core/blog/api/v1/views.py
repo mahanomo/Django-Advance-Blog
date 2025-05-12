@@ -1,18 +1,25 @@
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
+# from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import (
+    IsAuthenticatedOrReadOnly,
+    # IsAuthenticated,
+)
+
+# from rest_framework.response import Response
+# from rest_framework.views import APIView
 from .serializers import PostSerializer, CategorySerializer
 from blog.models import Post, Category
-from django.shortcuts import get_object_or_404
-from rest_framework import status
-from django.core.exceptions import ValidationError
+
+# from django.shortcuts import get_object_or_404
+# from rest_framework import status
+# from django.core.exceptions import ValidationError
 from rest_framework import mixins
 from rest_framework.generics import GenericAPIView
-from rest_framework.viewsets import GenericViewSet
-from django.http import Http404
+
+# from rest_framework.viewsets import GenericViewSet
+# from django.http import Http404
 from rest_framework import viewsets
-from .permissions import IsOwnerOrReadOnly
+
+# from .permissions import IsOwnerOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from .pagination import CustomPagination
@@ -21,7 +28,6 @@ from .pagination import CustomPagination
 @api_view(["GET","POST"])
 @permission_classes([IsAuthenticatedOrReadOnly])
 def postsList(request):
-    
     if request.method == "GET":
         posts = Post.objects.filter(status=True)
         serializer = PostSerializer(posts,many=True)
@@ -44,7 +50,6 @@ def postsList(request):
         posts = Post.objects.filter(status=True)
         serializer = PostSerializer(posts,many=True)
         return Response(serializer.data)
-    
     def post(self,request):
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
@@ -81,7 +86,6 @@ def postsDetail(request,id):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
     elif request.method == "DELETE":
         posts.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -91,12 +95,10 @@ def postsDetail(request,id):
 """class PostsDetail(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = PostSerializer
-    
     def get(self,request,id):
         posts = get_object_or_404(Post,pk=id)
         serializer = PostSerializer(posts)
         return Response(serializer.data)
-    
     def put(self,request,id):
         posts = get_object_or_404(Post,pk=id)
         serializer = PostSerializer(posts, data=request.data)
@@ -104,7 +106,6 @@ def postsDetail(request,id):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
     def delete(self,request,id):
         posts = get_object_or_404(Post,pk=id)
         posts.delete()
@@ -138,20 +139,16 @@ class RetrieveUpdateDestroyAPIView(
 
 
 """class PostViewSet(viewsets.ViewSet):
-    
     permission_classes = [IsAuthenticatedOrReadOnly]
-
     def list(self, request):
         queryset = Post.objects.filter(status=True)
         serializer = PostSerializer(queryset, many=True)
         return Response(serializer.data)
-    
     def retrieve(self, request, pk=None):
         queryset = Post.objects.filter(status=True)
         post = get_object_or_404(queryset, pk=pk)
         serializer = PostSerializer(post)
         return Response(serializer.data)
-    
     def create(self, request):
         pass
     def update(self, request, pk=None):
