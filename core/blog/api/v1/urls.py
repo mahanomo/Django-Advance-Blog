@@ -2,13 +2,13 @@ from django.urls import path
 from . import views
 from rest_framework import routers
 
-#set name for app
+# set name for app
 app_name = "api-v1"
-#write paths here
+# write paths here
 
 router = routers.DefaultRouter()
-router.register('posts', views.PostModelViewSet, basename='p-modelviewset')
-router.register('category', views.CategoryModelViewSet, basename='c-modelviewset')
+router.register("posts", views.PostModelViewSet, basename="p-modelviewset")
+router.register("category", views.CategoryModelViewSet, basename="c-modelviewset")
 urlpatterns = router.urls
 
 
@@ -24,4 +24,3 @@ urlpatterns = router.urls
                                                        ,"delete":"destroy"}),name="posts-detial"),
 
 ]"""
-
