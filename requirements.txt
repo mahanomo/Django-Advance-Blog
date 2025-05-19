@@ -5,12 +5,19 @@ tzdata==2025.2
 python-decouple
 pillow
 djangorestframework
+drf-yasg
+# third party modules
 markdown
 django-filter
 djangorestframework-simplejwt
-drf-yasg
+# email third party modules
 django-mail-templated
+# refactoring and tests
 flake8
 black
 pytest
 pytest-django
+Faker
+# background process and cache
+celery
+redis

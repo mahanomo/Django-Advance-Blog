@@ -165,3 +165,5 @@ EMAIL_USE_SSL = False  # Set to True if using SSL
 EMAIL_HOST_USER = ""  # SMTP server username
 EMAIL_HOST_PASSWORD = ""  # SMTP server password
 DEFAULT_FROM_EMAIL = "your_email@example.com"  # Default sender email address
+# celery config
+CELERY_BROKER_URL = 'redis://redis:6379/1'

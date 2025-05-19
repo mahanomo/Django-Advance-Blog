@@ -26,10 +26,10 @@ class Command(BaseCommand):
         profile_obj.save()
         for _ in range(2):
             Post.objects.create(
-                author = Profile.objects.get(user=user_obj),
-                title = self.fake.paragraph(nb_sentences=1),
-                content = self.fake.paragraph(nb_sentences=9),
-                category = random.choice(category_list),
-                status = random.choice([True,False]),
-                published_date = datetime.now(),
+                author = Profile.objects.get(user=user_obj), 
+                title = self.fake.paragraph(nb_sentences=1), 
+                content = self.fake.paragraph(nb_sentences=9), 
+                category = random.choice(category_list), 
+                status = random.choice([True,False]), 
+                published_date = datetime.now(), 
             )
