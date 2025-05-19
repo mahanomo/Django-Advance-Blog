@@ -33,3 +33,5 @@ class Command(BaseCommand):
                 status = random.choice([True,False]), 
                 published_date = datetime.now(), 
             )
+
+           

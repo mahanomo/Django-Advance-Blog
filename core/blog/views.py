@@ -11,6 +11,10 @@ from django.views.generic import (
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
+from django.core.cache import cache
+from django.http import HttpResponse
+import time
+
 from .models import Post
 from .forms import PostForm
 
@@ -61,3 +65,10 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     success_url = "/blog/posts/"
+
+def cache_test(request):
+    resp="hello cache"
+    if cache.get("TestCache") is None:
+        time.sleep(5)
+        cache.set("TestCache",resp)
+    return HttpResponse(resp)

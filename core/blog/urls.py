@@ -27,4 +27,5 @@ urlpatterns = [
         name="post-delete",
     ),
     path("api/v1/", include("blog.api.v1.urls")),
+    path("cache-test/", views.cache_test,name="cache-test"),
 ]

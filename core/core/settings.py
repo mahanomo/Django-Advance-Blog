@@ -167,3 +167,14 @@ EMAIL_HOST_PASSWORD = ""  # SMTP server password
 DEFAULT_FROM_EMAIL = "your_email@example.com"  # Default sender email address
 # celery config
 CELERY_BROKER_URL = 'redis://redis:6379/1'
+# cache config
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/1",
+        "TIMEOUT": 60,#for delete caches set timeout
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
