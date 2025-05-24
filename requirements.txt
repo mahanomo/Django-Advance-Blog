@@ -21,3 +21,6 @@ Faker
 # background process and cache
 celery
 redis
+django-redis
+# deployment modules
+gunicorn
